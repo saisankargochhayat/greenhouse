@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Greenhouse Gas Emissions from Agriculture</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=650, user-scalable=yes">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="container">
+    <div class="row">
+        <div class="col-md-12">
+          <h1>Greenhouse Gas Emissions from Agriculture<small> in the United States</small></h1>
+
+
+       </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12">
+        <div id= "visualization"></div>
+        
+      </div>
+      <div class="col-md-6">
+        <!-- <div class="dropdown">
+          View: 
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Livestock Related
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a class="changeColor" href="#">Overview</a></li>
+            <li><a class="changeColor" href="#">Crop Related</a></li>
+            <li><a class="changeColor" href="#">Livestock Related</a></li>
+          </ul>
+        </div>
+      </div> -->
+      <div class="col-md-12">
+        <div>Source: <a href="http://faostat3.fao.org/download/G1/GT/E">Food and Agriculture Organization of the United Nations, Statistics Division</a></div>
+      </div>
+      
+    </div>
+ 
+    </div>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script src="stackedBars.js"></script>
+    <script type="text/javascript">
+      
+      var chart = new stackedBars({
+        element: "#visualization",
+      });
+      $(".changeColor").on("click", function(e) {
+        chart.changeDataset( $(e.target).text() );
+      });
+
+      // // Width height
+      // var margin = {left: 40, right: 100, top: 20, bottom: 50}
+      // var width = $('#visualization').width() - margin.left - margin.right,
+      //     height = $('#visualization').height() - margin.top - margin.bottom;
+
+      // var svg = d3.select("#visualization").append('svg')
+      //           .attr("width", width + margin.left + margin.right)
+      //           .attr("height", height + margin.top + margin.bottom)
+      //           .append("g")
+      //           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");;
+
+      // var x = d3.scale.ordinal()
+      //  .rangeRoundBands([0, width], .03);
+
+      // var y = d3.scale.linear()
+      //     .rangeRound([height, 0]);
+
+      // var color = d3.scale.ordinal()
+      //     .range(["#ACD9E9",  "#D72027", "#FAAD61","#6b486b", "#a05d56", "#cccccc", "#2D7BB7"]);
+
+      // var xAxis = d3.svg.axis()
+      //     .scale(x)
+      //     .orient("bottom");
+
+      // var yAxis = d3.svg.axis()
+      //     .scale(y)
+      //     .orient("left")
+      //     .tickFormat(d3.format(".2s"));
+
+      // d3.csv("FAO-manure-emissions-USA.csv", function(error, data) {
+      //   if (error) throw error;
+
+      //   var sources = [];
+      //   var years = {};
+      //   var formattedData = [];
+
+      //   // Create keys for source types
+      //   data.forEach(function(d){
+      //     sources.push(d["source"]);
+      //     year = +d["year"];
+      //     if(!years[year]) {
+      //       years[year] = [];
+      //     }
+      //     years[year].push({"source": d["source"], "emissions": +d["emissions"]});
+      //   });
+
+      //   sources = jQuery.unique(sources);
+      //   color.domain(d3.keys(sources));
+
+      //   for(year in years){
+      //     yearObj = years[year];
+      //     var y0 = y1 = 0;
+      //     for(source in yearObj){   
+      //       var d = yearObj[source];
+      //       d.y0 = y0;
+      //       y0 += +d["emissions"];
+      //       d.y1 = y1 = y0;
+      //     };   
+      //     formattedData.push({"year": +year, "total": y1, "sources": yearObj});
+
+      //   };
+
+      //   formattedData.sort(function(a, b) { return a.year - b.year; });
+      //   x.domain(formattedData.map(function(d) { return d.year; }));
+      //   y.domain([0, d3.max(formattedData, function(d) { return d["total"]; })]);
+
+      //   svg.append("g")
+      //       .attr("class", "x axis")
+      //       .attr("transform", "translate(0," + height + ")")
+      //       .call(xAxis)
+      //       .selectAll("text")
+      //         .attr("x", -10)
+      //         .attr("y", -6)
+      //         .attr("transform", "rotate(-90)")
+      //         .style("text-anchor", "end");
+
+      //   svg.append("g")
+      //       .attr("class", "y axis")
+      //       .call(yAxis)
+      //     .append("text")
+      //       .attr("transform", "rotate(-90)")
+      //       .attr("y", 6)
+      //       .attr("dy", ".71em")
+      //       .style("text-anchor", "end")
+      //       .text("CO2 Equivalent Emissions");
+
+      //   var state = svg.selectAll(".state")
+      //       .data(formattedData)
+      //     .enter().append("g")
+      //       .attr("class", "g")
+      //       .attr("transform", function(d) { return "translate(" + x(d["year"]) + ",0)"; });
+
+      //   state.selectAll("rect")
+      //       .data(function(d) { return d["sources"]; })
+      //     .enter().append("rect")
+      //       .attr("width", x.rangeBand())
+      //       .attr("y", height-margin.top)
+      //       .attr("height", function(d) { return 0; })
+      //       .attr("class", function(d) {return d["source"] + " " + d["emissions"];})
+      //       .style("fill", function(d) { return color(d["source"]); });
+
+      //   state.selectAll("rect")
+      //       .transition()
+      //       .attr("y", function(d) { return y(+d["y1"]); })
+      //       .attr("height", function(d) { return y(d.y0) - y(d.y1); })
+      //       .duration(1000) // this is 1s
+      //       .delay(100);
+
+      //   var legend = svg.selectAll(".legend")
+      //       .data(sources.reverse())
+      //     .enter().append("g")
+      //       .attr("class", "legend")
+      //       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+      //   legend.append("rect")
+      //       .attr("x", width + 100- margin.right)
+      //       .attr("width", 18)
+      //       .attr("height", 18)
+      //       .style("fill", color);
+
+      //   legend.append("text")
+      //       .attr("x", width + 118 - margin.right)
+      //       .attr("y", 9)
+      //       .attr("dy", ".35em")
+      //       .style("text-anchor", "start")
+      //       .text(function(d) { return d; });
+
+      // });
+    
+    </script>
+  </body>
+</html>
