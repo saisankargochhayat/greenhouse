@@ -2,8 +2,6 @@
 
 A visualization of greenhouse gas emissions from animal agriculture, built with D3.
 
-[View here](http://cathrynploehn.github.io/emissions-animal-agriculture/)
-
 __Where I did I get the data from?__
 
 The [Food and Agriculture Organization of the United Nations
